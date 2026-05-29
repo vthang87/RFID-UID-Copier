@@ -37,6 +37,38 @@ Sao chép UID thẻ RFID MIFARE 13.56MHz bằng ESP32-S3 và module RC522, đi�
 | GND | GND |
 | **VCC** | **3.3V** ⚠️ KHÔNG dùng 5V |
 
+### Sơ đồ đấu dây cho ESP32-S3 Super Mini
+
+Super Mini dùng cùng GPIO như DevKitC (GPIO 9–13 cho SPI, GPIO48 cho RGB LED) nên **không cần đổi code**. Sơ đồ kết nối:
+
+```
+        ESP32-S3 Super Mini                 RC522
+       +---------------------+         +---------------+
+   3V3 | 3V3             GND |         |               |
+       | ...                 |         | 3.3V <--------+----- 3V3 (ESP32)
+ GPIO9 | 9  (RST) <----------+---------| RST           |
+GPIO10 | 10 (SS)  <----------+---------| SDA / SS      |
+GPIO11 | 11 (MOSI)<----------+---------| MOSI          |
+GPIO12 | 12 (SCK) <----------+---------| SCK           |
+GPIO13 | 13 (MISO)<----------+---------| MISO          |
+       | GND <---------------+---------| GND           |
+       | RGB LED = GPIO48    |         | IRQ  (khong noi)
+       +---------------------+         +---------------+
+```
+
+| RC522 | Super Mini (GPIO) | Dây |
+|-------|-------------------|-----|
+| VCC | 3V3 | ⚠️ 3.3V, KHÔNG 5V |
+| RST | GPIO9 | |
+| SDA (SS) | GPIO10 | |
+| MOSI | GPIO11 | |
+| SCK | GPIO12 | |
+| MISO | GPIO13 | |
+| GND | GND | |
+| IRQ | — | không nối |
+
+> **Lưu ý nguồn:** chân 3V3 của Super Mini cấp dòng hạn chế. Nếu RC522 chập chờn, hãy cấp nguồn 3.3V riêng (chung GND với ESP32).
+
 ## Build & Nạp (PlatformIO)
 
 ```bash
