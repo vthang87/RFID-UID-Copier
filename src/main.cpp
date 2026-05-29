@@ -6,6 +6,7 @@
 #include <WebServer.h>
 #include <DNSServer.h>
 #include <Preferences.h>
+#include <ESPmDNS.h>
 
 #define LED_PIN 48
 #define NUM_LEDS 1
@@ -21,6 +22,7 @@
 
 const char *AP_SSID = "RFID-Copier";
 const char *AP_PASS = "12345678";
+const char *MDNS_HOST = "rfid";
 
 Adafruit_NeoPixel pixels(NUM_LEDS, LED_PIN, NEO_GRB + NEO_KHZ800);
 MFRC522 rfid(RC522_SS, RC522_RST);
@@ -468,6 +470,13 @@ void setup() {
 
   server.begin();
   Serial.println("Web server da chay.");
+
+  if (MDNS.begin(MDNS_HOST)) {
+    MDNS.addService("http", "tcp", 80);
+    Serial.print("mDNS: http://");
+    Serial.print(MDNS_HOST);
+    Serial.println(".local");
+  }
 
   bootTime = millis();
   tryConnectSaved();

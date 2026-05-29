@@ -60,7 +60,7 @@ Thư viện phụ thuộc (tự động cài bởi PlatformIO):
 2. Kết nối vào WiFi:
    - **SSID:** `RFID-Copier`
    - **Mật khẩu:** `12345678`
-3. Trang điều khiển tự bật (hoặc mở `http://192.168.4.1`).
+3. Trang điều khiển tự bật (hoặc mở `http://192.168.4.1`, hoặc `http://rfid.local` qua mDNS).
 
 ### Tab "Copy thẻ"
 
